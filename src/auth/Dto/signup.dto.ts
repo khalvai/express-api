@@ -7,7 +7,6 @@ const signUpDto = Joi.object({
   password: Joi.string().min(8).max(15).required(),
   phone: Joi.string(),
 });
-
 export interface signUpDate {
   firstName: string;
   lastName: string;
