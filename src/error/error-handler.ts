@@ -9,6 +9,6 @@ export function errorHandler(
 ) {
   const status: number = error.status || 500;
   const message: string = error.message || 'Something went wrong';
-
-  res.status(status).json({ message });
+  const url = req.url;
+  res.status(status).json({ message, status: status, url: url });
 }

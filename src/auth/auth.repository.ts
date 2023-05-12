@@ -1,9 +1,9 @@
 import { User } from '@prisma/client';
 import prisma from '../prisma';
-import { signUpDate } from './Dto/signup.dto';
+import { SignUpData } from './Dto/signup.dto';
 
 export class AuthRepository {
-  async create(createUserData: signUpDate) {
+  async create(createUserData: SignUpData) {
     return prisma.user.create({
       data: {
         ...createUserData,
