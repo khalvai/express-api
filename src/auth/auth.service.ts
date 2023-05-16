@@ -6,16 +6,18 @@ import { NextFunction, Request, Response } from 'express';
 import { SignUpData } from './Dto/signup.dto';
 import { LoginData } from './Dto/login.dto';
 import { Hash } from '../common/hash';
+import { JwtService } from './jwt.service';
 
 export class AuthService {
   private authRepository: AuthRepository = new AuthRepository();
-  private hash: Hash = new Hash();
+  private jwtService: JwtService = new JwtService();
+
   @DoItSafe()
   async signUp(req: Request, res: Response) {
     const { password, ...signUpData }: SignUpData = req.body;
 
     const user = await this.checkEmailExists(signUpData.email);
-    const hashedPassword = await Hash.hash(password);
+    const hashedPassword = await Hash.DoHash(password);
     const createdUser = await this.authRepository.create({
       ...signUpData,
       password: hashedPassword,
@@ -44,11 +46,11 @@ export class AuthService {
     if (!isMatched) {
       throw new HttpException('wrong credentials :)', 400);
     }
+    const accessToken = this.jwtService.getAccessToken({
+      firstName: user.firstName,
+      id: user.id,
+    });
 
-    res.send('welcome to your world :)').status(200);
+    res.send(accessToken).status(200);
   }
-
-
-
-  
 }

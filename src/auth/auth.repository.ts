@@ -16,7 +16,6 @@ export class AuthRepository {
   }
 
   async findByEmail(email: string): Promise<User | null> {
-    console.log('in repo bro');
 
     return prisma.user.findUnique({
       where: {
