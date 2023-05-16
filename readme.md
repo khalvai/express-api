@@ -1,4 +1,8 @@
 ## to run this server
- # npm i
- 
- # npm run dev
+
+# npm i
+
+npx prisma migrate dev
+npx prisma generate
+
+# npm run dev
